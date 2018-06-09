@@ -144,14 +144,13 @@ class main extends Component {
 
     return (
       <div className="App">
-        <h1>PersistentBit</h1>
+        <h1>DecentralizedTinyUrl</h1>
         <p>URL Shortener that lives forever</p>
         <Row>
           <Input onChange={this.setShortUrl} type="text" placeholder="eth-reddit" label="Shortend URL"/>
           <Input onChange={this.setLongUrl} type="text" placeholder="https://www.reddit.com/r/ethereum/" label="Long URL"/>
         </Row>
         <Button onClick={this.newUrl}>Create New URL</Button>
-        <Button onClick={this.getUrl}>redirect</Button>
       </div>
     );
   }
