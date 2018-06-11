@@ -103,11 +103,11 @@ class main extends Component {
 
         persistentBitInstance.getUrl(this.props.match.params.id)
             .then((res)=> {
-                if(res.indexOf("http:")>= 0){
+                if(res.indexOf("http")>= 0){
                     window.location.replace(res)
                 } else {
                     this.setState({
-                        error: "OH DEAR LAWD, THIS URL DOESNT EXIST D:"
+                        error: "OH DEAR LAWD, THIS URL DOESNT EXIST. Give the Blockchain a second"
                     })
                 }        
             })

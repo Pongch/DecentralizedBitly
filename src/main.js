@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import PersistentBit from '../build/contracts/PersistentBit.json'
 import SimpleStorageContract from '../build/contracts/SimpleStorage.json'
 import getWeb3 from './utils/getWeb3'
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import {
   BrowserRouter as Router,
   Route,
@@ -14,7 +16,7 @@ import './css/pure-min.css'
 import './App.css'
 import 'materialize-css';
 import 'materialize-css/dist/css/materialize.min.css';
-import {Row, Input, Button} from 'react-materialize'
+import {Row, Input, Button, Col} from 'react-materialize'
 
 
 
@@ -53,6 +55,14 @@ class main extends Component {
     })
   }
 
+  registerClick(){
+    this.newUrl;
+  }
+
+  notification() {
+    
+  }
+
   setShortUrl(event){
     this.setState({
       shortUrl: event.target.value
@@ -66,24 +76,28 @@ class main extends Component {
   }
 
   newUrl() {
+    if(this.state.longUrl.indexOf("http")>= 0 ){
+      toast.success(`Your Bitly Link is at http://bitly.surge.sh/${this.state.shortUrl} give it a second`, { autoClose: 30000 })
     
-    
-    const contract = require('truffle-contract')
-    const persistentBit = contract(PersistentBit)
-    persistentBit.setProvider(this.state.web3.currentProvider)
+      const contract = require('truffle-contract')
+      const persistentBit = contract(PersistentBit)
+      persistentBit.setProvider(this.state.web3.currentProvider)
 
-    // Declaring this for later so we can chain functions on SimpleStorage.
-    var persistentBitInstance
+      // Declaring this for later so we can chain functions on SimpleStorage.
+      var persistentBitInstance
 
-    // Get accounts.
-    this.state.web3.eth.getAccounts((error, accounts) => {
-      persistentBit.deployed().then((instance) => {
-        persistentBitInstance = instance
+      // Get accounts.
+      this.state.web3.eth.getAccounts((error, accounts) => {
+        persistentBit.deployed().then((instance) => {
+          persistentBitInstance = instance
 
-        // Stores a given value, 5 by default.
-        return persistentBitInstance.newUrl(this.state.shortUrl, this.state.longUrl, {from: accounts[0]})
+          // Stores a given value, 5 by default.
+          return persistentBitInstance.newUrl(this.state.shortUrl, this.state.longUrl, {from: accounts[0]})
+        })
       })
-    })
+    } else {
+      toast.error(`Your Long URL does not Contain http:// !`, { autoClose: 10000 })
+    }
     
   }
 
@@ -108,49 +122,26 @@ class main extends Component {
     })
   }
 
-  instantiateContract() {
-    /*
-     * SMART CONTRACT EXAMPLE
-     *
-     * Normally these functions would be called in the context of a
-     * state management library, but for convenience I've placed them here.
-     */
-
-    const contract = require('truffle-contract')
-    const simpleStorage = contract(SimpleStorageContract)
-    simpleStorage.setProvider(this.state.web3.currentProvider)
-
-    // Declaring this for later so we can chain functions on SimpleStorage.
-    var simpleStorageInstance
-
-    // Get accounts.
-    this.state.web3.eth.getAccounts((error, accounts) => {
-      simpleStorage.deployed().then((instance) => {
-        simpleStorageInstance = instance
-
-        // Stores a given value, 5 by default.
-        return simpleStorageInstance.set(5, {from: accounts[0]})
-      }).then((result) => {
-        // Get the value from the contract to prove it worked.
-        return simpleStorageInstance.get.call(accounts[0])
-      }).then((result) => {
-        // Update state with the result.
-        return this.setState({ storageValue: result.c[0] })
-      })
-    })
-  }
 
   render() {
 
     return (
       <div className="App">
-        <h1>DecentralizedTinyUrl</h1>
-        <p>URL Shortener that lives forever</p>
-        <Row>
-          <Input onChange={this.setShortUrl} type="text" placeholder="eth-reddit" label="Shortend URL"/>
-          <Input onChange={this.setLongUrl} type="text" placeholder="https://www.reddit.com/r/ethereum/" label="Long URL"/>
-        </Row>
-        <Button onClick={this.newUrl}>Create New URL</Button>
+        <div className="center-align">
+          <h1>DecentralizedBitly</h1>
+          <p>URL Shortener that lives forever (now on <b>Ropsten</b> network) </p>
+          <div className="container">
+          <Row>
+              <Input onChange={this.setShortUrl} s={6} type="text" placeholder="heyheyhey" label="Your Unique Custom Name"/>
+              <Input onChange={this.setLongUrl} s={6} type="text" placeholder="https://www.youtube.com/watch?v=e5nyQmaq4k4" label="The Actual URL"/>
+          </Row>
+          
+          </div>
+          <Button onClick={this.newUrl}>Create New URL</Button>
+          <p>* Test it out: <a href="/heyheyhey">bitlyd.app/heyheyhey</a></p>
+          <p>** No duplicate Custom URL ever, your URL is unique :D </p>
+        </div>
+        <ToastContainer />
       </div>
     );
   }
