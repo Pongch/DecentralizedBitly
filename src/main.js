@@ -77,7 +77,7 @@ class main extends Component {
 
   newUrl() {
     if(this.state.longUrl.indexOf("http")>= 0 ){
-      toast.success(`Your Bitly Link is at http://bitly.surge.sh/${this.state.shortUrl} give it a second`, { autoClose: 30000 })
+      toast.success(`Your Bitly Link is at http://bitly.surge.sh/${this.state.shortUrl} give it a second`, { autoClose: 50000 })
     
       const contract = require('truffle-contract')
       const persistentBit = contract(PersistentBit)
@@ -129,16 +129,16 @@ class main extends Component {
       <div className="App">
         <div className="center-align">
           <h1>DecentralizedBitly</h1>
-          <p>URL Shortener that lives forever (now on <b>Ropsten</b> network) </p>
+          <p>URL Shortener with 100% uptime, forever (now on <b>Ethereum Mainnet</b> ) </p>
           <div className="container">
           <Row>
-              <Input onChange={this.setShortUrl} s={6} type="text" placeholder="heyheyhey" label="Your Unique Custom Name"/>
+              <Input onChange={this.setShortUrl} s={6} type="text" placeholder="your_custom_key_word" label="The Custom URL"/>
               <Input onChange={this.setLongUrl} s={6} type="text" placeholder="https://www.youtube.com/watch?v=e5nyQmaq4k4" label="The Actual URL"/>
           </Row>
           
           </div>
           <Button onClick={this.newUrl}>Create New URL</Button>
-          <p>* Test it out: <a href="/heyheyhey">bitlyd.app/heyheyhey</a></p>
+          <p>Have your Custom URL that will look like this: <a href="/hey">dbitly.cc/hey</a></p>
           <p>** No duplicate Custom URL ever, your URL is unique :D </p>
         </div>
         <ToastContainer />

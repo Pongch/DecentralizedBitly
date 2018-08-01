@@ -1,7 +1,7 @@
 
 var HDWalletProvider = require("truffle-hdwallet-provider");
-var infura_apikey = "yourInfuraSecretKey";
-var mnemonic = "your mnemonic key from metamask wallet";
+var infura_apikey = "TrBuamh4xcgE2mLnXRdz ";
+var mnemonic = "kiwi snack position glimpse work tortoise logic siren uphold type minute feel";
 module.exports = {
   networks: {
     development: {
@@ -9,9 +9,10 @@ module.exports = {
       port: 8545,
       network_id: "*" // Match any network id
     },
-    ropsten: {
-      provider: new HDWalletProvider(mnemonic, "https://ropsten.infura.io/"+infura_apikey),
-      network_id: 3
+    mainnet: {
+      provider: new HDWalletProvider(mnemonic, "https://mainnet.infura.io/"+infura_apikey, 1),
+      network_id: 1,
+      gas: 2000000
     }
   }
 };

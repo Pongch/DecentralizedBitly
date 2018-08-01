@@ -21,7 +21,7 @@ let getWeb3 = new Promise(function(resolve, reject) {
     } else {
       // Fallback to ropsten if no web3 injection. We've configured this to
       // use the development console's port by default.
-      var provider = new Web3.providers.HttpProvider('https://ropsten.infura.io/TrBuamh4xcgE2mLnXRdz')
+      var provider = new Web3.providers.HttpProvider('https://mainnet.infura.io/TrBuamh4xcgE2mLnXRdz')
       //'https://ropsten.infura.io/TrBuamh4xcgE2mLnXRdz')
 
       web3 = new Web3(provider)
